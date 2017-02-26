@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: manage
+  labels:
+    app: pulp
+spec:
+  restartPolicy: Never
+  containers:
+    - name: manage
+      image: pulp/manage
+      imagePullPolicy: Never
+      volumeMounts:
+        - name: pulp-config
+          mountPath: /var/run/secrets/pulp/pulp-config/
+          readOnly: true
+        - name: client-cert
+          mountPath: /var/run/secrets/pulp/client-cert/
+          readOnly: true
+        - name: pulp-ca
+          mountPath: /var/run/secrets/pulp/pulp-ca/
+        - name: logvol
+          mountPath: /dev/log
+          readOnly: false
+        - name: vlp
+          mountPath: /var/lib/pulp/
+  volumes:
+    - name: pulp-config
+      secret:
+        secretName: pulp-config
+    - name: client-cert
+      secret:
+        secretName: client-cert
+    - name: pulp-ca
+      configMap:
+          name: pulp-ca
+    - name: logvol
+      hostPath:
+          path: /dev/log
+    - name: vlp
+      persistentVolumeClaim:
+          claimName: vlp

@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+          app: pulp
+          name: worker
+    spec:
+        containers:
+            - name: worker
+              image: pulp/celery
+              imagePullPolicy: Never
+              args:
+                  - worker
+              volumeMounts:
+                  - name: pulp-config
+                    mountPath: /var/run/secrets/pulp/pulp-config/
+                    readOnly: true
+                  - name: client-cert
+                    mountPath: /var/run/secrets/pulp/client-cert/
+                    readOnly: true
+                  - name: pulp-ca
+                    mountPath: /var/run/secrets/pulp/pulp-ca/
+                  - name: vlp
+                    mountPath: /var/lib/pulp/
+                  - name: logvol
+                    mountPath: /dev/log
+                    readOnly: false
+        volumes:
+            - name: pulp-config
+              secret:
+                  secretName: pulp-config
+            - name: client-cert
+              secret:
+                secretName: client-cert
+            - name: pulp-ca
+              configMap:
+                  name: pulp-ca
+            - name: vlp
+              persistentVolumeClaim:
+                  claimName: vlp
+            - name: logvol
+              hostPath:
+                  path: /dev/log

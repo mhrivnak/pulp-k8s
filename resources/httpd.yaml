@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd
+  labels:
+      app: pulp
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30080
+    protocol: TCP
+    name: http
+  - port: 443
+    nodePort: 30443
+    protocol: TCP
+    name: https
+  selector:
+      name: httpd
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: httpd
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+          app: pulp
+          name: httpd
+    spec:
+        containers:
+            - name: httpd
+              image: pulp/httpd
+              imagePullPolicy: Never
+              ports:
+                  - containerPort: 80
+                  - containerPort: 443
+              volumeMounts:
+                  - name: pulp-config
+                    mountPath: /var/run/secrets/pulp/pulp-config/
+                    readOnly: true
+                  - name: httpd-certs
+                    mountPath: /var/run/secrets/pulp/httpd-cert/
+                    readOnly: true
+                  - name: client-cert
+                    mountPath: /var/run/secrets/pulp/client-cert/
+                    readOnly: true
+                  - name: pulp-ca
+                    mountPath: /var/run/secrets/pulp/pulp-ca/
+                  - name: vlp
+                    mountPath: /var/lib/pulp/
+                  - name: logvol
+                    mountPath: /dev/log
+                    readOnly: false
+        volumes:
+            - name: pulp-config
+              secret:
+                  secretName: pulp-config
+            - name: httpd-certs
+              secret:
+                  secretName: httpd-certs
+            - name: client-cert
+              secret:
+                secretName: client-cert
+            - name: pulp-ca
+              configMap:
+                  name: pulp-ca
+            - name: vlp
+              persistentVolumeClaim:
+                  claimName: vlp
+            - name: logvol
+              hostPath:
+                  path: /dev/log
