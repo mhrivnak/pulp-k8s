@@ -44,7 +44,7 @@ spec:
                     mountPath: /var/run/secrets/pulp/pulp-config/
                     readOnly: true
                   - name: httpd-certs
-                    mountPath: /var/run/secrets/pulp/httpd-cert/
+                    mountPath: /var/run/secrets/pulp/httpd-certs/
                     readOnly: true
                   - name: client-cert
                     mountPath: /var/run/secrets/pulp/client-cert/
