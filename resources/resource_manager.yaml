@@ -12,8 +12,8 @@ spec:
     spec:
         containers:
             - name: resource-manager
-              image: pulp/celery
-              imagePullPolicy: Never
+              image: mhrivnak/pulp-k8s-celery
+              # imagePullPolicy: Never
               args:
                   - resource_manager
               volumeMounts:

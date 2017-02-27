@@ -34,8 +34,8 @@ spec:
     spec:
         containers:
             - name: httpd
-              image: pulp/httpd
-              imagePullPolicy: Never
+              image: mhrivnak/pulp-k8s-httpd
+              # imagePullPolicy: Never
               ports:
                   - containerPort: 80
                   - containerPort: 443
