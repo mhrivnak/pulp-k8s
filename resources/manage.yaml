@@ -8,8 +8,8 @@ spec:
   restartPolicy: Never
   containers:
     - name: manage
-      image: pulp/manage
-      imagePullPolicy: Never
+      image: mhrivnak/pulp-k8s-manage
+      # imagePullPolicy: Never
       volumeMounts:
         - name: pulp-config
           mountPath: /var/run/secrets/pulp/pulp-config/

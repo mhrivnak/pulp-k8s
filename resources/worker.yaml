@@ -12,8 +12,8 @@ spec:
     spec:
         containers:
             - name: worker
-              image: pulp/celery
-              imagePullPolicy: Never
+              image: mhrivnak/pulp-k8s-celery
+              # imagePullPolicy: Never
               args:
                   - worker
               volumeMounts:

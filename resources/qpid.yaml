@@ -28,8 +28,8 @@ spec:
     spec:
         containers:
             - name: qpidd
-              image: pulp/qpid
-              imagePullPolicy: Never
+              image: mhrivnak/pulp-k8s-qpid
+              # imagePullPolicy: Never
               ports:
                   - containerPort: 5671
               volumeMounts:

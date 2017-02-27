@@ -8,8 +8,8 @@ spec:
   restartPolicy: Never
   containers:
     - name: setup
-      image: pulp/base
-      imagePullPolicy: Never
+      image: mhrivnak/pulp-k8s-base
+      # imagePullPolicy: Never
       command:
           - /setup.sh
       volumeMounts:

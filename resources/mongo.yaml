@@ -28,8 +28,8 @@ spec:
     spec:
         containers:
             - name: mongodb
-              image: pulp/mongodb
-              imagePullPolicy: Never
+              image: mhrivnak/pulp-k8s-mongodb
+              # imagePullPolicy: Never
               ports:
                   - containerPort: 27017
               volumeMounts:
