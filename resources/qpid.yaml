@@ -3,14 +3,14 @@ kind: Service
 metadata:
   name: qpidd
   labels:
-      app: pulp
+    app: pulp
 spec:
   type: NodePort
   ports:
   - port: 5671
     protocol: TCP
   selector:
-      name: qpidd
+    name: qpidd
 
 ---
 
@@ -23,30 +23,30 @@ spec:
   template:
     metadata:
       labels:
-          app: pulp
-          name: qpidd
+        app: pulp
+        name: qpidd
     spec:
-        containers:
-            - name: qpidd
-              image: mhrivnak/pulp-k8s-qpid
-              # imagePullPolicy: Never
-              ports:
-                  - containerPort: 5671
-              volumeMounts:
-                  - name: pulp-ca
-                    mountPath: /var/run/secrets/pulp/pulp-ca/
-                  - name: qpiddb
-                    mountPath: /var/run/secrets/pulp/qpiddb/
-                    readOnly: true
-                  - name: vlq
-                    mountPath: /var/lib/qpidd/
-        volumes:
-            - name: qpiddb
-              secret:
-                secretName: qpiddb
+      containers:
+        - name: qpidd
+          image: mhrivnak/pulp-k8s-qpid
+          # imagePullPolicy: Never
+          ports:
+            - containerPort: 5671
+          volumeMounts:
             - name: pulp-ca
-              configMap:
-                  name: pulp-ca
+              mountPath: /var/run/secrets/pulp/pulp-ca/
+            - name: qpiddb
+              mountPath: /var/run/secrets/pulp/qpiddb/
+              readOnly: true
             - name: vlq
-              persistentVolumeClaim:
-                  claimName: vlq
+              mountPath: /var/lib/qpidd/
+      volumes:
+        - name: qpiddb
+          secret:
+            secretName: qpiddb
+        - name: pulp-ca
+          configMap:
+            name: pulp-ca
+        - name: vlq
+          persistentVolumeClaim:
+            claimName: vlq

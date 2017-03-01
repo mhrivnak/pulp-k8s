@@ -10,7 +10,7 @@ spec:
   - port: 27017
     protocol: TCP
   selector:
-      name: mongodb
+    name: mongodb
 
 ---
 
@@ -23,30 +23,30 @@ spec:
   template:
     metadata:
       labels:
-          app: pulp
-          name: mongodb
+        app: pulp
+        name: mongodb
     spec:
-        containers:
-            - name: mongodb
-              image: mhrivnak/pulp-k8s-mongodb
-              # imagePullPolicy: Never
-              ports:
-                  - containerPort: 27017
-              volumeMounts:
-                  - name: mongodb-cert
-                    mountPath: /var/run/secrets/pulp/mongodb-cert/
-                    readOnly: true
-                  - name: pulp-ca
-                    mountPath: /var/run/secrets/pulp/pulp-ca/
-                  - name: vlm
-                    mountPath: /var/lib/mongodb/
-        volumes:
-            - name: mongodb-cert
-              secret:
-                  secretName: mongodb-cert
-            - name: pulp-ca
-              configMap:
-                  name: pulp-ca
+      containers:
+        - name: mongodb
+          image: mhrivnak/pulp-k8s-mongodb
+          # imagePullPolicy: Never
+          ports:
+            - containerPort: 27017
+          volumeMounts:
             - name: vlm
-              persistentVolumeClaim:
-                  claimName: vlm
+              mountPath: /var/lib/mongodb/
+            - name: mongodb-cert
+              mountPath: /var/run/secrets/pulp/mongodb-cert/
+              readOnly: true
+            - name: pulp-ca
+              mountPath: /var/run/secrets/pulp/pulp-ca/
+      volumes:
+        - name: vlm
+          persistentVolumeClaim:
+            claimName: vlm
+        - name: mongodb-cert
+          secret:
+            secretName: mongodb-cert
+        - name: pulp-ca
+          configMap:
+            name: pulp-ca

@@ -11,13 +11,13 @@ spec:
       image: mhrivnak/pulp-k8s-base
       # imagePullPolicy: Never
       command:
-          - /setup.sh
+        - /setup.sh
       volumeMounts:
-          - name: pulp-config
-            mountPath: /var/run/secrets/pulp/pulp-config/
-            readOnly: true
-          - name: vlp
-            mountPath: /mnt/vlp/
+        - name: pulp-config
+          mountPath: /var/run/secrets/pulp/pulp-config/
+          readOnly: true
+        - name: vlp
+          mountPath: /mnt/vlp/
   volumes:
       - name: pulp-config
         secret:

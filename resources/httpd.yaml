@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: httpd
   labels:
-      app: pulp
+    app: pulp
 spec:
   type: NodePort
   ports:
@@ -29,49 +29,49 @@ spec:
   template:
     metadata:
       labels:
-          app: pulp
-          name: httpd
+        app: pulp
+        name: httpd
     spec:
-        containers:
-            - name: httpd
-              image: mhrivnak/pulp-k8s-httpd
-              # imagePullPolicy: Never
-              ports:
-                  - containerPort: 80
-                  - containerPort: 443
-              volumeMounts:
-                  - name: pulp-config
-                    mountPath: /var/run/secrets/pulp/pulp-config/
-                    readOnly: true
-                  - name: httpd-certs
-                    mountPath: /var/run/secrets/pulp/httpd-certs/
-                    readOnly: true
-                  - name: client-cert
-                    mountPath: /var/run/secrets/pulp/client-cert/
-                    readOnly: true
-                  - name: pulp-ca
-                    mountPath: /var/run/secrets/pulp/pulp-ca/
-                  - name: vlp
-                    mountPath: /var/lib/pulp/
-                  - name: logvol
-                    mountPath: /dev/log
-                    readOnly: false
-        volumes:
+      containers:
+        - name: httpd
+          image: mhrivnak/pulp-k8s-httpd
+          # imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
             - name: pulp-config
-              secret:
-                  secretName: pulp-config
+              mountPath: /var/run/secrets/pulp/pulp-config/
+              readOnly: true
             - name: httpd-certs
-              secret:
-                  secretName: httpd-certs
+              mountPath: /var/run/secrets/pulp/httpd-certs/
+              readOnly: true
             - name: client-cert
-              secret:
-                secretName: client-cert
+              mountPath: /var/run/secrets/pulp/client-cert/
+              readOnly: true
             - name: pulp-ca
-              configMap:
-                  name: pulp-ca
+              mountPath: /var/run/secrets/pulp/pulp-ca/
             - name: vlp
-              persistentVolumeClaim:
-                  claimName: vlp
+              mountPath: /var/lib/pulp/
             - name: logvol
-              hostPath:
-                  path: /dev/log
+              mountPath: /dev/log
+              readOnly: false
+      volumes:
+        - name: pulp-config
+          secret:
+            secretName: pulp-config
+        - name: httpd-certs
+          secret:
+            secretName: httpd-certs
+        - name: client-cert
+          secret:
+            secretName: client-cert
+        - name: pulp-ca
+          configMap:
+            name: pulp-ca
+        - name: vlp
+          persistentVolumeClaim:
+            claimName: vlp
+        - name: logvol
+          hostPath:
+            path: /dev/log

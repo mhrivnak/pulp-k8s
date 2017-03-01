@@ -33,10 +33,10 @@ spec:
         secretName: client-cert
     - name: pulp-ca
       configMap:
-          name: pulp-ca
+        name: pulp-ca
     - name: logvol
       hostPath:
-          path: /dev/log
+        path: /dev/log
     - name: vlp
       persistentVolumeClaim:
-          claimName: vlp
+        claimName: vlp

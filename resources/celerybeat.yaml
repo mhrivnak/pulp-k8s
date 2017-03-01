@@ -7,42 +7,42 @@ spec:
   template:
     metadata:
       labels:
-          app: pulp
-          name: celerybeat
+        app: pulp
+        name: celerybeat
     spec:
-        containers:
-            - name: celery
-              image: mhrivnak/pulp-k8s-celery
-              # imagePullPolicy: Never
-              args:
-                  - beat
-              volumeMounts:
-                  - name: pulp-config
-                    mountPath: /var/run/secrets/pulp/pulp-config/
-                    readOnly: true
-                  - name: client-cert
-                    mountPath: /var/run/secrets/pulp/client-cert/
-                    readOnly: true
-                  - name: pulp-ca
-                    mountPath: /var/run/secrets/pulp/pulp-ca/
-                  - name: vlp
-                    mountPath: /var/lib/pulp/
-                  - name: logvol
-                    mountPath: /dev/log
-                    readOnly: false
-        volumes:
+      containers:
+        - name: celery
+          image: mhrivnak/pulp-k8s-celery
+          # imagePullPolicy: Never
+          args:
+            - beat
+          volumeMounts:
             - name: pulp-config
-              secret:
-                  secretName: pulp-config
+              mountPath: /var/run/secrets/pulp/pulp-config/
+              readOnly: true
             - name: client-cert
-              secret:
-                secretName: client-cert
+              mountPath: /var/run/secrets/pulp/client-cert/
+              readOnly: true
             - name: pulp-ca
-              configMap:
-                  name: pulp-ca
+              mountPath: /var/run/secrets/pulp/pulp-ca/
             - name: vlp
-              persistentVolumeClaim:
-                  claimName: vlp
+              mountPath: /var/lib/pulp/
             - name: logvol
-              hostPath:
-                  path: /dev/log
+              mountPath: /dev/log
+              readOnly: false
+      volumes:
+        - name: pulp-config
+          secret:
+            secretName: pulp-config
+        - name: client-cert
+          secret:
+            secretName: client-cert
+        - name: pulp-ca
+          configMap:
+            name: pulp-ca
+        - name: vlp
+          persistentVolumeClaim:
+            claimName: vlp
+        - name: logvol
+          hostPath:
+            path: /dev/log
