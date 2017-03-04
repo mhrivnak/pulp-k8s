@@ -16,7 +16,7 @@ spec:
     protocol: TCP
     name: https
   selector:
-      name: httpd
+    name: httpd
 
 ---
 
