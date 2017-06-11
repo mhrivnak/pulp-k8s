@@ -80,8 +80,8 @@ Supporting Services
 MongoDB and Qpid are ready to be started. They must remain singletons, so do
 not scale beyond 1 pod each.
 
-    kubectl -f resources/mongo.yaml
-    kubectl -f resources/qpid.yaml
+    kubectl create -f resources/mongo.yaml
+    kubectl create -f resources/qpid.yaml
 
 
 Setup
@@ -92,7 +92,7 @@ Almost done. We need two setup steps.
 The first time you deploy, run the `setup` pod to establish the correct
 filesystem layout on your shared storage.
 
-    kubectl -f resources/setup.yaml
+    kubectl create -f resources/setup.yaml
 
 Watch for the `setup` pod to finish by running this command:
 
@@ -101,7 +101,7 @@ Watch for the `setup` pod to finish by running this command:
 Every time you deploy a new version of Pulp, including the first deployment,
 run `pulp-manage-db`. Make sure that no Pulp services are running.
 
-    kubectl -f resources/manage.yaml
+    kubectl create -f resources/manage.yaml
 
 As above, watch for completion with this command:
 

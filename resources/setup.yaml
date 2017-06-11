@@ -11,7 +11,7 @@ spec:
       image: mhrivnak/pulp-k8s-base
       # imagePullPolicy: Never
       command:
-        - /setup.sh
+        - /setup.sh  # solves a storage scalability problem
       volumeMounts:
         - name: pulp-config
           mountPath: /var/run/secrets/pulp/pulp-config/
