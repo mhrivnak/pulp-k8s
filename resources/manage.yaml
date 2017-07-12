@@ -8,7 +8,7 @@ spec:
   restartPolicy: Never
   containers:
     - name: manage
-      image: mhrivnak/pulp-k8s-manage
+      image: mhrivnak/pulp-k8s-manage:f26
       # imagePullPolicy: Never
       volumeMounts:
         - name: pulp-config

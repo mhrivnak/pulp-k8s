@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: mhrivnak/pulp-k8s-celery
+          image: mhrivnak/pulp-k8s-celery:f26
           # imagePullPolicy: Never
           args:
             - worker

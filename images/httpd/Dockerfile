@@ -1,4 +1,4 @@
-FROM mhrivnak/pulp-k8s-base
+FROM mhrivnak/pulp-k8s-base:f26
 
 EXPOSE 80 443
 

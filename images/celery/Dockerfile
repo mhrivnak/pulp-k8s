@@ -1,4 +1,4 @@
-FROM mhrivnak/pulp-k8s-base
+FROM mhrivnak/pulp-k8s-base:f26
 
 ADD run.sh /run.sh
 
