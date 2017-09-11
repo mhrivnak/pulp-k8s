@@ -8,7 +8,7 @@ spec:
   restartPolicy: Never
   containers:
     - name: setup
-      image: mhrivnak/pulp-k8s-base
+      image: mhrivnak/pulp-k8s-base:f26
       # imagePullPolicy: Never
       command:
         - /setup.sh  # solves a storage scalability problem

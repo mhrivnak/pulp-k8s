@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: resource-manager
-          image: mhrivnak/pulp-k8s-celery
+          image: mhrivnak/pulp-k8s-celery:f26
           # imagePullPolicy: Never
           args:
             - resource_manager
